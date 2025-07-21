@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="${post.title}"></h1>
+    <div>
+        <p th:text="${post.post}"></p>
+    </div><br>
+    <a th:href="@{/main}" th:method="get">메인으로</a><br>
+    <div sec:authorize="isAuthenticated()">
+        <div th:if="${user.username == post.user.name}">
+            <a th:href="@{/post/delete/{id}(id=${post.id})}" th:method="get">삭제하기</a>
+        </div>
+    </div><br>
+    <form th:action="@{/comment/write/{id}(id=${post.id})}" th:method="post">
+        <input type="text" name="content">
+        <input type="submit">
+    </form>
+
+    <ul th:each="comment : ${comments}">
+       <li>
+           <a th:text="${comment.content}"></a>
+           <a th:text="${comment.user.name}"></a>
+           <div th:if="${user.username == comment.user.name}">
+               <a th:href="@{/comment/delete/{postId}/{commentId}(postId=${post.id},commentId=${comment.id})}">삭제하기</a>
+           </div>
+       </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="@{/post/write}" method="post">
+        제목 <input name="title" type="text">
+        내용 <input name="content" type="text">
+        <button type="submit">등록</button>
+    </form>
+</body>
+</html>

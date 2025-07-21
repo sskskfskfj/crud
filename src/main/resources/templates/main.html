@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1 th:text="${principal}"></h1>
+
+    <div sec:authorize="!isAuthenticated()">
+        <a th:href="@{/auth/login}" th:method="get">로그인</a>
+        <a th:href="@{/auth/signup}" th:method="get">회원가입</a>
+    </div>
+    <div>
+        <a th:href="@{/post}" th:method="get">글쓰기</a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/auth/logout}">로그아웃</a>
+    </div>
+
+    <ul th:each="post : ${posts}">
+        <li>
+            <a th:text="${post.title}" th:href="@{/post/read/{id}(id=${post.id})}" th:method="get"></a>
+            <a th:text="${post.user.name}" th:href="@{/post/read/{id}(id=${post.id})}" th:method="get"></a>
+        </li>
+    </ul>
+</body>
+</html>
